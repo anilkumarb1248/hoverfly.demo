@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+activityLog:
+  url: http://localhost:9090
+  resources:
+    eventStats:
+      path: /report/event/stats
