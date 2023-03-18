@@ -1,0 +1,26 @@
+{
+  "activitySearchSuccessResponse": {
+    "status": "success",
+    "events": [
+      {
+        "uuid": "Test_UUID_1",
+        "userName": "Test_User_1",
+        "event": "ADD_EVENT",
+        "eventType": "AGENT"
+      },
+      {
+        "uuid": "Test_UUID_2",
+        "userName": "Test_User_2",
+        "event": "UPDATE_EVENT",
+        "eventType": "AGENT"
+      },
+      {
+        "uuid": "Test_UUID_3",
+        "userName": "Test_User_3",
+        "event": "MODIFY_DATA_EVENT",
+        "eventType": "USER"
+      }
+
+    ]
+  }
+}

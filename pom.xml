@@ -27,7 +27,7 @@
         <groovy.version>3.0.9</groovy.version>
         <gmavenplus.plugin.version>1.13.1</gmavenplus.plugin.version>
 
-        <hoverfly.version>0.12.3</hoverfly.version>
+        <hoverfly.version>0.14.4</hoverfly.version>
     </properties>
 
     <dependencies>
@@ -62,9 +62,21 @@
         </dependency>
 
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220924</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
