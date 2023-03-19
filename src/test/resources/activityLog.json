@@ -12,15 +12,30 @@
         "uuid": "Test_UUID_2",
         "userName": "Test_User_2",
         "event": "UPDATE_EVENT",
-        "eventType": "AGENT"
-      },
-      {
-        "uuid": "Test_UUID_3",
-        "userName": "Test_User_3",
-        "event": "MODIFY_DATA_EVENT",
         "eventType": "USER"
       }
-
     ]
+  },
+  "activitySearchFailureResponse": {
+    "status": "failure"
+  },
+
+  "activityEventStatsSuccessResponse": {
+    "status": "success",
+    "eventStats": [
+      {
+        "event": "ADD_EVENT",
+        "count": "100"
+      },
+      {
+        "event": "UPDATE_EVENT",
+        "count": "50"
+      }
+    ]
+  },
+
+  "activityEventStatsFailureResponse": {
+    "status": "failure",
+    "eventStats": []
   }
 }

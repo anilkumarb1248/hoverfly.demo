@@ -4,7 +4,9 @@ server:
     context-path: /HoverFlyDemo
 
 activityLog:
-  url: http://localhost:9090
+#  url: http://localhost:9091/ActivityMicro
+# If we uses the localhost the hoverfly is not working
+  url: http://activity.demo.com
   resources:
     search:
       path: /activity/search

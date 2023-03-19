@@ -1,27 +1,35 @@
 package com.hoverfly.demo.comptest
 
 import com.hoverfly.demo.Application
-import io.specto.hoverfly.junit.api.view.HoverflyInfoView
 import io.specto.hoverfly.junit.core.Hoverfly
 import io.specto.hoverfly.junit.core.HoverflyConfig
-import io.specto.hoverfly.junit.rule.HoverflyRule
-import org.junit.ClassRule
+import io.specto.hoverfly.junit.core.HoverflyMode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
-import org.springframework.http.*
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.util.MultiValueMap
 import org.springframework.web.util.UriComponentsBuilder
 import spock.lang.Shared
 import spock.lang.Specification
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
                 classes = Application.class )
 class BaseServiceCompSpec extends Specification {
 
-//    HoverflyConfig hoverflyConfig = HoverflyConfig.localConfigs().adminPort(8080).proxyPort(8080)
-//    HoverflyConfig hoverflyConfig = HoverflyConfig.localConfigs()
+    @Shared
+//    HoverflyConfig localConfig = HoverflyConfig.localConfigs().disableTlsVerification().asWebServer().proxyPort(9090)
+    HoverflyConfig localConfig = HoverflyConfig.localConfigs()
+
+    @Shared
+    Hoverfly hoverFly = new Hoverfly(localConfig, HoverflyMode.SIMULATE)
+
 
     @Autowired
     TestRestTemplate restTemplate
@@ -32,22 +40,10 @@ class BaseServiceCompSpec extends Specification {
     @Shared
     String CONTEXT_PATH = "/HoverFlyDemo"
 
-    @Shared
-    @ClassRule
-    HoverflyRule hoverFlyRule = HoverflyRule.inSimulationMode()
-
-    def setup(){
-//        hoverFlyRule.resetJournal()
-
-        HoverflyConfig hoverflyConfig = HoverflyConfig.localConfigs()
-        hoverflyConfig.upstreamProxy(new InetSocketAddress("127.0.0.1", 8900)).logToStdOut().build()
-//        Hoverfly hoverfly = new Hoverfly(localConfigs().upstreamProxy(new InetSocketAddress("127.0.0.1", 8900)).logToStdOut(), SIMULATE)
-
-        hoverflyConfig.getProperties()
-//        HoverflyInfoView hoverflyInfo = hoverfly.getHoverflyInfo();
-        print("***************** " + hoverflyConfig.getProperties())
-//        assertThat(hoverflyInfo.getUpstreamProxy()).isEqualTo("http://127.0.0.1:8900");
+    def setupSpec(){
+        hoverFly.start()
     }
+
 
     URI buildUri(String resource) {
         return buildUri(resource, null)

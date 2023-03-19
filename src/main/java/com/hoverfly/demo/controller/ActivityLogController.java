@@ -50,7 +50,8 @@ public class ActivityLogController {
                 String message = "No activities found with given request";
                 apiSingleResponse.setStatus(new Status("204", message));
                 LOGGER.info(message);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(apiSingleResponse);
+                //Note: If we use HttpStatus.NO_CONTENT, it doesn't return the body. So using OK response
+                return ResponseEntity.status(HttpStatus.OK).body(apiSingleResponse);
             }
         }catch (Exception e){
             String message = "Encountered Exception";
@@ -84,7 +85,8 @@ public class ActivityLogController {
                 String message = "No events found for the given time period";
                 apiResponse.setStatus(new Status("204", message));
                 LOGGER.info(message);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(apiResponse);
+                //Note: If we use HttpStatus.NO_CONTENT, it doesn't return the body. So using OK response
+                return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
             }
         }catch (Exception e){
             String message = "Encountered Exception";

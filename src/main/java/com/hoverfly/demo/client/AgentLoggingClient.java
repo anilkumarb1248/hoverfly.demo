@@ -16,7 +16,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-
 @Component
 public class AgentLoggingClient {
 
@@ -35,6 +34,21 @@ public class AgentLoggingClient {
         this.activityLoggingUrl = activityLoggingUrl;
         this.activitySearchResource = activitySearchResource;
         this.eventStatsResource = eventStatsResource;
+    }
+
+    public ActivitySearchResponse getActivities(ActivitySearchRequest request) {
+        ActivitySearchResponse activitySearchResponse = null;
+        HttpEntity httpEntity = new HttpEntity(request, buildHeaders());
+        try {
+            ResponseEntity<ActivitySearchResponse> responseEntity = restTemplate.exchange(activityLoggingUrl + activitySearchResource,
+                    HttpMethod.POST, httpEntity, ActivitySearchResponse.class);
+            if (responseEntity != null && responseEntity.getBody() != null) {
+                activitySearchResponse = responseEntity.getBody();
+            }
+        } catch (RestClientException e) {
+            throw new ClientException(e, AgentLoggingClient.class);
+        }
+        return activitySearchResponse;
     }
 
     public EventStatsResponse getEventStats(EventStatsRequest request) {
@@ -60,18 +74,4 @@ public class AgentLoggingClient {
         return headers;
     }
 
-    public ActivitySearchResponse getActivities(ActivitySearchRequest request) {
-        ActivitySearchResponse activitySearchResponse = null;
-        HttpEntity httpEntity = new HttpEntity(request, buildHeaders());
-        try {
-            ResponseEntity<ActivitySearchResponse> responseEntity = restTemplate.exchange(activityLoggingUrl + activitySearchResource,
-                    HttpMethod.POST, httpEntity, ActivitySearchResponse.class);
-            if (responseEntity != null && responseEntity.getBody() != null) {
-                activitySearchResponse = responseEntity.getBody();
-            }
-        } catch (RestClientException e) {
-            throw new ClientException(e, AgentLoggingClient.class);
-        }
-        return activitySearchResponse;
-    }
 }

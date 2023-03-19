@@ -16,11 +16,12 @@ public class ActivityLogService {
         this.agentLoggingClient = agentLoggingClient;
     }
 
+    public ActivitySearchResponse getActivities(ActivitySearchRequest request) {
+        return agentLoggingClient.getActivities(request);
+    }
+
     public EventStatsResponse getEventStats(EventStatsRequest request){
         return agentLoggingClient.getEventStats(request);
     }
 
-    public ActivitySearchResponse getActivities(ActivitySearchRequest request) {
-        return agentLoggingClient.getActivities(request);
-    }
 }
